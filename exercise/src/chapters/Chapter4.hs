@@ -45,3 +45,5 @@ b |||||| c | b = True
           | c = True
           | otherwise = False
 
+-- 6
+mult = \x -> \y -> \z -> x * y * z
