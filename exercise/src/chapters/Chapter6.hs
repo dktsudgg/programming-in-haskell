@@ -59,3 +59,22 @@ msort [x, y]
     | otherwise = y : [x]
 msort xs = merge (msort flist) (msort blist)
     where (flist, blist) = halve xs
+
+-- 6 - 1
+sum' :: Num a => [a] -> a
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
+
+-- 6 - 2
+take' :: Int -> [a] -> [a]
+take' 0 _ = []
+take' _ [] = []
+take' n (x:xs)
+    | 0 <= n =  x : take' (n - 1) xs
+    | otherwise = []
+
+-- 6 - 3
+last' :: [a] -> a
+last' [] = error "Empty list"
+last' [x] = x
+last' (x:xs) = last' xs
