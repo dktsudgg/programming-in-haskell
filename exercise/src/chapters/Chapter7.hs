@@ -28,6 +28,9 @@ dropWhile' p (x:xs)
     | p x = dropWhile' p xs
     | otherwise = x:xs
 
+-- 3
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\a1 a2 -> f a1 : a2) []
 
-
-
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' p = foldr (\a1 a2 -> if p a1 then a1 : a2 else a2) []
