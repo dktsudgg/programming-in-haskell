@@ -39,3 +39,9 @@ filter' p = foldr (\a1 a2 -> if p a1 then a1 : a2 else a2) []
 dec2int :: [Int] -> Int
 dec2int = foldl (\a1 a2 -> a1 * 10 + a2) 0
 
+-- 6
+curry' :: ((a, b) -> c) -> a -> b -> c
+curry' f = \x y -> f (x, y)
+
+uncurry' :: (a -> b -> c) -> (a, b) -> c
+uncurry' f = \(x, y) -> f x y
