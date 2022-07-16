@@ -46,3 +46,16 @@ merge [] ys = ys
 merge (x:xs) (y:ys)
     | x < y = x : merge xs (y:ys)
     | otherwise = y : merge (x:xs) ys
+
+-- 5
+halve :: [a] -> ([a], [a])
+halve xs = splitAt (length xs `div` 2) xs
+
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [x] = [x]
+msort [x, y]
+    | x < y = x : [y]
+    | otherwise = y : [x]
+msort xs = merge (msort flist) (msort blist)
+    where (flist, blist) = halve xs
