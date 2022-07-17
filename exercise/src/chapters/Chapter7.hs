@@ -45,3 +45,23 @@ curry' f = \x y -> f (x, y)
 
 uncurry' :: (a -> b -> c) -> (a, b) -> c
 uncurry' f = \(x, y) -> f x y
+
+-- 7
+unfold p h t x
+    | p x = []
+    | otherwise = h x : unfold p h t (t x)
+
+type Bit = Int
+
+chop8 :: [Bit] -> [[Bit]]
+chop8 [] = []
+chop8 bits = take 8 bits : chop8 (drop 8 bits)
+
+chop8' :: [Bit] -> [[Bit]]
+chop8' = unfold (==[]) (take 8) (drop 8)
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f = unfold null (f . head) tail
+
+iterate' :: (a -> a) -> a -> [a]
+iterate' = unfold (const False) id
