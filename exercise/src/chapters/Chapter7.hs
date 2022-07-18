@@ -1,6 +1,7 @@
 module Chapter7
     ( 
     ) where
+import Data.Char
 
 -- 1
 asIsMapFilter f p = \xs -> [f x | x <- xs, p x]
@@ -53,10 +54,6 @@ unfold p h t x
 
 type Bit = Int
 
-chop8 :: [Bit] -> [[Bit]]
-chop8 [] = []
-chop8 bits = take 8 bits : chop8 (drop 8 bits)
-
 chop8' :: [Bit] -> [[Bit]]
 chop8' = unfold (==[]) (take 8) (drop 8)
 
@@ -65,3 +62,48 @@ map'' f = unfold null (f . head) tail
 
 iterate' :: (a -> a) -> a -> [a]
 iterate' = unfold (const False) id
+
+-- 8
+bin2int :: [Bit] -> Int
+bin2int = foldr (\x y -> x + 2 * y) 0
+
+int2bin :: Int -> [Bit]
+int2bin 0 = []
+int2bin n = n `mod` 2 : int2bin (n `div` 2)
+
+make8 :: [Bit] -> [Bit]
+make8 bits = take 8 (bits ++ repeat 0)
+
+encode :: String -> [Bit]
+encode = concat . map (make8 . int2bin . ord)
+
+chop8 :: [Bit] -> [[Bit]]
+chop8 [] = []
+chop8 bits = take 8 bits : chop8 (drop 8 bits)
+
+decode :: [Bit] -> String
+decode = map (chr . bin2int) . chop8
+
+transmit :: String -> String
+transmit = decode . channel . encode
+channel :: [Bit] -> [Bit]
+channel =id
+
+makeParityBit :: [Bit] -> Bit
+makeParityBit bits = let bitCnt = sum bits in bitCnt `mod` 2
+
+make8WithParityBit :: [Bit] -> [Bit]
+make8WithParityBit bits = make8 bits ++ [makeParityBit bits]
+
+chop8WithParityBit :: [Bit] -> [[Bit]]
+chop8WithParityBit [] = []
+chop8WithParityBit bits
+    | parityBit == bits !! 8 = take 8 bits : chop8WithParityBit (drop 9 bits)
+    | otherwise = error "Parity bit error"
+    where parityBit = (makeParityBit . take 8) bits
+
+encodeWithParityBit :: String -> [Bit]
+encodeWithParityBit = concat . map (make8WithParityBit . int2bin . ord)
+
+decodeWithParityBit :: [Bit] -> String
+decodeWithParityBit = map (chr . bin2int) . chop8WithParityBit
