@@ -107,3 +107,7 @@ encodeWithParityBit = concat . map (make8WithParityBit . int2bin . ord)
 
 decodeWithParityBit :: [Bit] -> String
 decodeWithParityBit = map (chr . bin2int) . chop8WithParityBit
+
+-- 9
+failingTransmit :: String -> String
+failingTransmit = decodeWithParityBit . tail . encodeWithParityBit
