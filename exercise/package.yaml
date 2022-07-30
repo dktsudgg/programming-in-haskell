@@ -1,6 +1,6 @@
 name:                exercise
 version:             0.1.0.0
-github:              "https://github.com/dktsudgg/study-haskell/tree/main/exercise"
+github:              "dktsudgg/study-haskell"
 license:             BSD3
 author:              "dktsudgg"
 maintainer:          "dktsudgg@gmail.com"
