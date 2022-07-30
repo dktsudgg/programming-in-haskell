@@ -2,7 +2,9 @@ module Chapter9
     (
     ) where
 
+import Parsing -- if you run in ghci, then you have to do ":set -isrc/chapters/Chapter8"
 import Control.Concurrent (threadDelay)
+import System.Console.ANSI
 
 sleepSecond :: Int -> IO ()
 sleepSecond n = do threadDelay (n * 1000000)
@@ -54,7 +56,7 @@ isEmpty b p = not (elem p b)
 
 neighbs :: Pos -> [Pos]
 neighbs (x, y) = map wrap [(x-1, y-1),  (x, y-1),   (x+1, y-1),
-                           (x-1, y),                (x+1, y),   
+                           (x-1, y),                (x+1, y),
                            (x-1, y+1),  (x, y+1),   (x+1, y+1)]
 
 wrap :: Pos -> Pos
@@ -89,5 +91,37 @@ wait :: Int -> IO ()
 wait n = seqn [return () | _ <- [1..n]]
 
 startLifeGame :: IO ()
-startLifeGame = do cls
-                   life glider
+startLifeGame = do b <- initGlider []
+                   cls
+                   life b
+
+initGlider :: Board -> IO Board
+initGlider b = do putStr "Put an alive cell's position: "
+                  str <- readLine ""
+                  if str == "done" then return b
+                  else do case parse str2Pos str of
+                            [((num1, num2), _)] -> initGlider (b ++ [(num1, num2)])
+                            _ -> error "Wrong Position !"
+
+str2Pos :: Parser Pos
+str2Pos = do symbol "("
+             num1 <- natural
+             symbol ","
+             num2 <- natural
+             symbol ")"
+             return (num1, num2)
+
+readLine :: String -> IO String
+readLine xs = do c <- getChar
+                 case c of
+                  '\n' -> return xs
+                  '\DEL' -> do if xs == ""
+                               then do putStr "\ESC[1D\ESC[1D"
+                                       putStr "  "
+                                       putStr "\ESC[1D\ESC[1D"
+                                       readLine xs
+                               else do putStr "\ESC[1D\ESC[1D\ESC[1D"
+                                       putStr "   "
+                                       putStr "\ESC[1D\ESC[1D\ESC[1D"
+                                       readLine (init xs)
+                  _ -> do readLine (xs ++ [c])

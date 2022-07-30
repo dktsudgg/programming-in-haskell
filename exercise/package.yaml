@@ -21,9 +21,12 @@ description:         Please see the README on GitHub at <https://github.com/dkts
 
 dependencies:
 - base >= 4.7 && < 5
+- ansi-terminal # for using "System.Console.ANSI". found from google "stackage System.Console.ANSI"
 
 library:
-  source-dirs: src
+  source-dirs:
+  - src
+  - src/chapters/Chapter8
 
 executables:
   exercise-exe:
