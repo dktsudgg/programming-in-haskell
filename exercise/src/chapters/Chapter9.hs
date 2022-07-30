@@ -43,6 +43,10 @@ glider = [(4,2), (2,3), (4,3), (3,4), (4,4)]
 
 showcells :: Board -> IO ()
 showcells b = seqn [writeat p "0" | p <- b]
+
+clscells :: Board -> IO ()
+clscells b = seqn [writeat (px, py) " " | (px, py) <- concat [[(x, y) | y <- [1..height]] | x <- [1..width]]]
+
 isAlive :: Board -> Pos -> Bool
 isAlive b p = elem p b
 isEmpty :: Board -> Pos -> Bool
@@ -76,7 +80,7 @@ nextgen :: Board -> Board
 nextgen b = survivors b ++ births b
 
 life :: Board -> IO ()
-life b = do cls
+life b = do clscells b
             showcells b
             sleepSecond 3
             life (nextgen b)
