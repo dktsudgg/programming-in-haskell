@@ -35,6 +35,9 @@ library
   build-depends:
       ansi-terminal
     , base >=4.7 && <5
+    , gi-gtk
+    , gi-harfbuzz ==0.0.6
+    , haskell-gi-base
   default-language: Haskell2010
 
 executable exercise-exe
@@ -48,6 +51,9 @@ executable exercise-exe
       ansi-terminal
     , base >=4.7 && <5
     , exercise
+    , gi-gtk
+    , gi-harfbuzz ==0.0.6
+    , haskell-gi-base
   default-language: Haskell2010
 
 test-suite exercise-test
@@ -62,4 +68,7 @@ test-suite exercise-test
       ansi-terminal
     , base >=4.7 && <5
     , exercise
+    , gi-gtk
+    , gi-harfbuzz ==0.0.6
+    , haskell-gi-base
   default-language: Haskell2010

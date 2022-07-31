@@ -22,6 +22,9 @@ description:         Please see the README on GitHub at <https://github.com/dkts
 dependencies:
 - base >= 4.7 && < 5
 - ansi-terminal # for using "System.Console.ANSI". found from google "stackage System.Console.ANSI"
+- gi-harfbuzz == 0.0.6 # https://github.com/haskell-gi/haskell-gi/issues/385
+- gi-gtk
+- haskell-gi-base
 
 library:
   source-dirs:
