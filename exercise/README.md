@@ -6,3 +6,6 @@
 # https://github.com/haskell-gi/haskell-gi#mac-osx
 brew install gobject-introspection gtk+ gtk+3
 ```
+
+### gi-gtk example
+https://github.com/owickstrom/gi-gtk-declarative/tree/master/examples

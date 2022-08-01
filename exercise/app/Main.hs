@@ -10,12 +10,16 @@ module Main where
 
 import qualified GI.Gtk as Gtk
 import Data.GI.Base
+import GI.Gtk (widgetWidthRequest, widgetHeightRequest)
 
 main :: IO ()
 main = do
   Gtk.init Nothing
 
-  win <- new Gtk.Window [ #title := "Hi there" ]
+  win <- new Gtk.Window [ #title := "Hi there"
+                        , #widthRequest   := 400
+                        , #heightRequest  := 300
+                        ]
 
   on win #destroy Gtk.mainQuit
 
