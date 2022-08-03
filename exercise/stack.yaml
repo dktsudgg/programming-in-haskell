@@ -40,8 +40,9 @@ packages:
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
 #
-# extra-deps: []
-
+extra-deps:
+- gi-harfbuzz-0.0.6@sha256:c3f90157c220ba9aa8d1e221e5d7d73c528dac62fa4866058432c7dc14f76c90,6512
+- gi-freetype2-2.0.1@sha256:86c6104db20113532739e268cd74000553fd5b80aaab85b4dbfa3d7b65ef74d2,2739
 # Override default flag values for local packages and extra-deps
 # flags: {}
 
