@@ -1,4 +1,4 @@
-module Chapter9
+module Lifegame
     (
     ) where
 
