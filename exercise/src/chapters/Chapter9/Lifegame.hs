@@ -87,9 +87,6 @@ life b = do showcells b
             clscells b (nextgen b)
             life (nextgen b)
 
-wait :: Int -> IO ()
-wait n = seqn [return () | _ <- [1..n]]
-
 startLifeGame :: IO ()
 startLifeGame = do b <- initGlider []
                    cls
