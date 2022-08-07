@@ -79,17 +79,3 @@ str2Pos = do symbol "("
              symbol ")"
              return (num1, num2)
 
-readLine :: String -> IO String
-readLine xs = do c <- getChar
-                 case c of
-                  '\n' -> return xs
-                  '\DEL' -> do if xs == ""
-                               then do putStr "\ESC[1D\ESC[1D"
-                                       putStr "  "
-                                       putStr "\ESC[1D\ESC[1D"
-                                       readLine xs
-                               else do putStr "\ESC[1D\ESC[1D\ESC[1D"
-                                       putStr "   "
-                                       putStr "\ESC[1D\ESC[1D\ESC[1D"
-                                       readLine (init xs)
-                  _ -> do readLine (xs ++ [c])
