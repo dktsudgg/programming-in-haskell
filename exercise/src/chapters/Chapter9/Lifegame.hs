@@ -3,42 +3,13 @@ module Lifegame
     ) where
 
 import Parsing -- if you run in ghci, then you have to do ":set -isrc/chapters/Chapter8"
-import Control.Concurrent (threadDelay)
-import System.Console.ANSI
-
-sleepSecond :: Int -> IO ()
-sleepSecond n = do threadDelay (n * 1000000)
-
-cls :: IO ()
-cls = putStr "\ESC[2J"
-
---
-
-type Pos = (Int, Int)
-
-goto :: Pos -> IO ()
-goto (x, y) = putStr ("\ESC[" ++ show y ++ ";" ++ show x ++ "H")
-
---
-
-writeat :: Pos -> String -> IO ()
-writeat p xs = do goto p
-                  putStr xs
-
-seqn :: [IO a] -> IO ()
-seqn [] = return ()
-seqn (a:as) = do a
-                 seqn as
-
--- 
+import Tui
 
 width :: Int
 width = 5
 
 height :: Int
 height = 5
-
-type Board = [Pos]
 
 glider :: Board
 glider = [(4,2), (2,3), (4,3), (3,4), (4,4)]
@@ -87,9 +58,6 @@ life b = do showcells b
             clscells b (nextgen b)
             life (nextgen b)
 
-wait :: Int -> IO ()
-wait n = seqn [return () | _ <- [1..n]]
-
 startLifeGame :: IO ()
 startLifeGame = do b <- initGlider []
                    cls
@@ -111,17 +79,3 @@ str2Pos = do symbol "("
              symbol ")"
              return (num1, num2)
 
-readLine :: String -> IO String
-readLine xs = do c <- getChar
-                 case c of
-                  '\n' -> return xs
-                  '\DEL' -> do if xs == ""
-                               then do putStr "\ESC[1D\ESC[1D"
-                                       putStr "  "
-                                       putStr "\ESC[1D\ESC[1D"
-                                       readLine xs
-                               else do putStr "\ESC[1D\ESC[1D\ESC[1D"
-                                       putStr "   "
-                                       putStr "\ESC[1D\ESC[1D\ESC[1D"
-                                       readLine (init xs)
-                  _ -> do readLine (xs ++ [c])

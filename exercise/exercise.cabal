@@ -27,11 +27,15 @@ library
   exposed-modules:
       Lib
       Parsing
+      Lifegame
+      NimGame
+      Tui
   other-modules:
       Paths_exercise
   hs-source-dirs:
       src
       src/chapters/Chapter8
+      src/chapters/Chapter9
   build-depends:
       ansi-terminal
     , base >=4.7 && <5

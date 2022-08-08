@@ -30,6 +30,7 @@ library:
   source-dirs:
   - src
   - src/chapters/Chapter8
+  - src/chapters/Chapter9
 
 executables:
   exercise-exe:
