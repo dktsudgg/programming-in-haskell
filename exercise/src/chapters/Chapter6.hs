@@ -58,7 +58,7 @@ msort [x, y]
     | x < y = x : [y]
     | otherwise = y : [x]
 msort xs = merge (msort flist) (msort blist)
-    where (flist, blist) = halve xs
+  where (flist, blist) = halve xs
 
 -- 6 - 1
 sum' :: Num a => [a] -> a

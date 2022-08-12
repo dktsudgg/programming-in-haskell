@@ -100,7 +100,7 @@ chop8WithParityBit [] = []
 chop8WithParityBit bits
     | parityBit == bits !! 8 = take 8 bits : chop8WithParityBit (drop 9 bits)
     | otherwise = error "Parity bit error"
-    where parityBit = (makeParityBit . take 8) bits
+  where parityBit = (makeParityBit . take 8) bits
 
 encodeWithParityBit :: String -> [Bit]
 encodeWithParityBit = concat . map (make8WithParityBit . int2bin . ord)

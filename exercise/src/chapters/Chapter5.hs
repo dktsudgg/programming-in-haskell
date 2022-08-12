@@ -50,8 +50,9 @@ int2upperlet :: Int -> Char
 int2upperlet n = chr (ord 'A' + n)
 
 shift :: Int -> Char -> Char
-shift n c | isLower c = int2lowerlet ((lowerlet2int c + n) `mod` 26)
-          | otherwise = int2upperlet ((upperlet2int c + n) `mod` 26)
+shift n c
+    | isLower c = int2lowerlet ((lowerlet2int c + n) `mod` 26)
+    | otherwise = int2upperlet ((upperlet2int c + n) `mod` 26)
 
 encode :: Int -> String -> String
 encode n xs = [shift n x | x <- xs]

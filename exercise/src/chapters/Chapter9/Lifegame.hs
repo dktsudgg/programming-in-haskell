@@ -12,7 +12,13 @@ height :: Int
 height = 5
 
 glider :: Board
-glider = [(4,2), (2,3), (4,3), (3,4), (4,4)]
+glider =
+    [ (4,2)
+    , (2,3)
+    , (4,3)
+    , (3,4)
+    , (4,4)
+    ]
 
 showcells :: Board -> IO ()
 showcells b = seqn [writeat p "0" | p <- b]
@@ -31,8 +37,10 @@ neighbs (x, y) = map wrap [(x-1, y-1),  (x, y-1),   (x+1, y-1),
                            (x-1, y+1),  (x, y+1),   (x+1, y+1)]
 
 wrap :: Pos -> Pos
-wrap (x, y) = ((x - 1) `mod` width + 1,
-               (y - 1) `mod` height + 1)
+wrap (x, y) =
+    ( (x - 1) `mod` width + 1
+    , (y - 1) `mod` height + 1
+    )
 
 liveneighbs :: Board -> Pos -> Int
 liveneighbs b = length . filter (isAlive b) . neighbs
@@ -41,9 +49,9 @@ survivors :: Board -> [Pos]
 survivors b = [p | p <- b, elem (liveneighbs b p) [2, 3]]
 
 births :: Board -> [Pos]
-births b = [p | p <- rmdups (concat (map neighbs b)),
-                isEmpty b p,
-                liveneighbs b p == 3]
+births b = [p | p <- rmdups (concat (map neighbs b))
+                , isEmpty b p
+                , liveneighbs b p == 3]
 
 rmdups :: Eq a => [a] -> [a]
 rmdups [] = []
@@ -53,29 +61,35 @@ nextgen :: Board -> Board
 nextgen b = survivors b ++ births b
 
 life :: Board -> IO ()
-life b = do showcells b
-            sleepSecond 3
-            clscells b (nextgen b)
-            life (nextgen b)
+life b = do
+    showcells b
+    sleepSecond 3
+    clscells b (nextgen b)
+    life (nextgen b)
 
 startLifeGame :: IO ()
-startLifeGame = do b <- initGlider []
-                   cls
-                   life b
+startLifeGame = do
+    b <- initGlider []
+    cls
+    life b
 
 initGlider :: Board -> IO Board
-initGlider b = do putStr "Put an alive cell's position: "
-                  str <- readLine ""
-                  if str == "done" then return b
-                  else do case parse str2Pos str of
-                            [((num1, num2), _)] -> initGlider (b ++ [(num1, num2)])
-                            _ -> error "Wrong Position !"
+initGlider b = do
+    putStr "Put an alive cell's position: "
+    str <- readLine ""
+    if str == "done"
+    then return b
+    else do
+        case parse str2Pos str of
+            [((num1, num2), _)] -> initGlider (b ++ [(num1, num2)])
+            _                   -> error "Wrong Position !"
 
 str2Pos :: Parser Pos
-str2Pos = do symbol "("
-             num1 <- natural
-             symbol ","
-             num2 <- natural
-             symbol ")"
-             return (num1, num2)
+str2Pos = do
+    symbol "("
+    num1 <- natural
+    symbol ","
+    num2 <- natural
+    symbol ")"
+    return (num1, num2)
 
