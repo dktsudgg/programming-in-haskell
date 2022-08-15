@@ -16,6 +16,7 @@ The monad of parsers
 The code in the book doesn't work because the way you declare monads has changed.
 The link below shows how to properly declare a monad.
 https://gitlab.haskell.org/ghc/ghc/-/wikis/migration/7.10
+https://stackoverflow.com/questions/23727768/which-parts-of-real-world-haskell-are-now-obsolete-or-considered-bad-practice
 --------------------
 
 > newtype Parser a              =  P (String -> [(a,String)])

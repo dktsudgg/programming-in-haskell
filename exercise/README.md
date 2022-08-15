@@ -1,5 +1,10 @@
 # exercise
 
+### This book was written using GHC 6.X
+So you'd better check 2 links below
+ - https://gitlab.haskell.org/ghc/ghc/-/wikis/migration/7.10
+ - https://stackoverflow.com/questions/23727768/which-parts-of-real-world-haskell-are-now-obsolete-or-considered-bad-practice
+
 ### Install gtk+3 using brew on MacOS
 #### This is for a GUI-Based life game 
 ```shell
