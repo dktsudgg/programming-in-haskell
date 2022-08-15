@@ -44,11 +44,23 @@ occurs m (Node l n r) = case compare m n of
     GT -> occurs m r
 
 -- 3
-cntOfLeafIn :: Tree -> Int
-cntOfLeafIn (Leaf _) = 1
-cntOfLeafIn (Node l n r) = cntOfLeafIn l + cntOfLeafIn r
+data BinaryTree = BinaryLeaf Int | BinaryNode BinaryTree BinaryTree
+    deriving Show
+cntOfLeafIn :: BinaryTree -> Int
+cntOfLeafIn (BinaryLeaf _) = 1
+cntOfLeafIn (BinaryNode l r) = cntOfLeafIn l + cntOfLeafIn r
 
-isBalanced :: Tree -> Bool
-isBalanced (Leaf _) = True
-isBalanced (Node l n r) = diff <= 1
+isBalanced :: BinaryTree -> Bool
+isBalanced (BinaryLeaf _) = True
+isBalanced (BinaryNode l r) = diff <= 1
   where diff = abs $ cntOfLeafIn l - cntOfLeafIn r
+
+-- 4
+balance :: [Int] -> BinaryTree
+balance [x] = BinaryLeaf x
+balance xs = BinaryNode (balance lList) (balance rList)
+  where (lList, rList) = divide xs
+
+divide :: [Int] -> ([Int], [Int])
+divide xs = splitAt half xs
+  where half = length xs `div` 2
